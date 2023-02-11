@@ -47,10 +47,11 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 			int firstYear = 1000 + vehicleFilter.getDecade();
 			List<Predicate> predicatesYear = new ArrayList<>();
 			LocalDate startDate = LocalDate.of(firstYear, 1, 1);
-			LocalDate endDate = LocalDate.of(LocalDate.now().getYear() + vehicleFilter.getDecade(), 12, 31);
+			LocalDate endDate = LocalDate.of(firstYear + 9, 12, 31);
 
-			for (LocalDate date = startDate; date.isBefore(endDate.plusYears(100)); date = date.plusYears(100)) {
-				predicatesYear.add(criteriaBuilder.equal(root.get("year"), date.getYear()));
+			for (LocalDate date = startDate; date.isBefore(LocalDate.now()); date = date.plusYears(100)) {
+				predicatesYear.add(criteriaBuilder.between(root.get("yearManufacture"), date.getYear(), endDate.getYear()));
+				endDate = endDate.plusYears(100);
 			}
 
 			predicates.add(criteriaBuilder.or(predicatesYear.toArray(new Predicate[0])));

@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class VehiclesPatchDto {
     private String brand;
-    private int year;
+    private int yearManufacture;
     private String description;
 }

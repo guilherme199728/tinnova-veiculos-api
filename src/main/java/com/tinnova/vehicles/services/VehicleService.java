@@ -17,7 +17,7 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    public List<Vehicle> getAll() {
+    public List<Vehicle> findAll() {
         Sort sort = Sort.by("id").ascending();
         return vehicleRepository.findAll(sort);
     }
@@ -44,7 +44,7 @@ public class VehicleService {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(NotFoundException::new);
         vehicle.setBrand(newVehicle.getBrand());
         vehicle.setSold(newVehicle.isSold());
-        vehicle.setYear(newVehicle.getYear());
+        vehicle.setYearManufacture(newVehicle.getYearManufacture());
         vehicle.setDescription(newVehicle.getDescription());
         vehicle.setModificationDate(LocalDateTime.now());
         vehicle.setBrand(newVehicle.getBrand());
@@ -55,7 +55,7 @@ public class VehicleService {
     public Vehicle patch(Long id, VehiclesPatchDto vehiclesPatchDto) throws NotFoundException {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(NotFoundException::new);
         vehicle.setBrand(vehiclesPatchDto.getBrand());
-        vehicle.setYear(vehiclesPatchDto.getYear());
+        vehicle.setYearManufacture(vehiclesPatchDto.getYearManufacture());
         vehicle.setDescription(vehiclesPatchDto.getDescription());
         vehicle.setModificationDate(LocalDateTime.now());
 
@@ -66,7 +66,7 @@ public class VehicleService {
         vehicleRepository.deleteById(id);
     }
 
-    public List<String> getBrands() {
-        return vehicleRepository.getBrands();
+    public List<String> findBrands() {
+        return vehicleRepository.findBrands();
     }
 }

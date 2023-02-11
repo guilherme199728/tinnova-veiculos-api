@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long>, VehicleRepositoryQuery {
     @Query("select distinct vehicles.brand from Vehicle vehicles")
-    List<String> getBrands();
+    List<String> findBrands();
 }

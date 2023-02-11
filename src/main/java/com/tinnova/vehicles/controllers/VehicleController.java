@@ -1,4 +1,4 @@
-package com.tinnova.vehicles.resources;
+package com.tinnova.vehicles.controllers;
 
 import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
 import com.tinnova.vehicles.exceptions.NotFoundException;
@@ -22,8 +22,8 @@ public class VehicleController {
     private VehicleService vehicleService;
 
     @GetMapping
-    public List<Vehicle> getAll() {
-        return vehicleService.getAll();
+    public List<Vehicle> findAll() {
+        return vehicleService.findAll();
     }
 
     @GetMapping("/filter")
@@ -49,13 +49,13 @@ public class VehicleController {
     }
 
     @PostMapping
-    public void save(@RequestBody Vehicle vehicle, HttpServletResponse httpServletResponse) {
+    public ResponseEntity<Vehicle> save(@RequestBody Vehicle vehicle, HttpServletResponse httpServletResponse) {
         Vehicle newVehicle = vehicleService.save(vehicle);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newVehicle.getId()).toUri();
         httpServletResponse.setHeader("Location", uri.toASCIIString());
 
-        ResponseEntity.created(uri).body(newVehicle);
+        return ResponseEntity.created(uri).body(newVehicle);
     }
 
 
@@ -75,7 +75,7 @@ public class VehicleController {
     }
 
     @GetMapping("/brands")
-    public List<String> getBrands() {
-        return vehicleService.getBrands();
+    public ResponseEntity<List<String>> findBrands() {
+        return ResponseEntity.ok(vehicleService.findBrands());
     }
 }
