@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/veiculos")
-public class VehicleResource {
+public class VehicleController {
 	
 	@Autowired
 	private VehicleService vehicleService;
