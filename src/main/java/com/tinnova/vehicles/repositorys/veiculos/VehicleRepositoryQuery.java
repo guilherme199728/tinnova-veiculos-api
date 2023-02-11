@@ -1,0 +1,11 @@
+package com.tinnova.vehicles.repositorys.veiculos;
+
+import com.tinnova.vehicles.models.Vehicle;
+import com.tinnova.vehicles.repositorys.filter.VehicleFilter;
+
+import java.util.List;
+
+public interface VehicleRepositoryQuery {
+	public List<Vehicle> findByFilter(VehicleFilter vehicleFilter);
+	
+}
