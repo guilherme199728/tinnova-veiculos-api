@@ -24,6 +24,7 @@ public class Vehicle implements Serializable {
 	private String brand;
 	
 	@PreserveNotNull
+	@Column(name = "year_manufacture")
 	private Integer yearManufacture;
 	
 	@PreserveNotNull
