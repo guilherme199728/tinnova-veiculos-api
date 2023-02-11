@@ -17,10 +17,9 @@ import java.util.List;
 
 public class HttpUtils {
     private static final String BASE_URL = "http://localhost:8082";
-    private static final RestTemplate restTemplate = restTemplate();
 
     public static RestTemplate restTemplate()  {
-        RestTemplate restTemplate =  new RestTemplate ();
+        RestTemplate restTemplate =  new RestTemplate();
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
         restTemplate.setRequestFactory(requestFactory);
@@ -29,32 +28,32 @@ public class HttpUtils {
 
     public static <T> List<T> getList(String path, Class<T[]> responseType) {
         String url = BASE_URL + path;
-        T[] objects = restTemplate.getForObject(url, responseType);
+        T[] objects = restTemplate().getForObject(url, responseType);
         assert objects != null;
         return Arrays.asList(objects);
     }
 
     public static <T> T get(String path, Class<T> responseType) {
         String url = BASE_URL + path;
-        return restTemplate.getForObject(url, responseType);
+        return restTemplate().getForObject(url, responseType);
     }
 
     public static <T> T post(String path, Object request, Class<T> responseType) {
         String url = BASE_URL + path;
         HttpEntity<Object> entity = new HttpEntity<>(request, defaultHeaders());
-        return restTemplate.postForObject(url, entity, responseType);
+        return restTemplate().postForObject(url, entity, responseType);
     }
 
     public static <T> T patch(String path, Object request, Class<T> responseType) {
         String url = BASE_URL + path;
         HttpEntity<Object> entity = new HttpEntity<>(request,  defaultHeaders());
 
-        return restTemplate.exchange(url, HttpMethod.PATCH, entity, responseType).getBody();
+        return restTemplate().exchange(url, HttpMethod.PATCH, entity, responseType).getBody();
     }
 
     public static void delete(String path) throws URISyntaxException {
         String url = BASE_URL + path;
-        restTemplate.delete(new URI(url));
+        restTemplate().delete(new URI(url));
     }
 
     private static HttpHeaders defaultHeaders() {
