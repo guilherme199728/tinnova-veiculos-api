@@ -1,27 +1,23 @@
 package com.tinnova.vehicles.controllers;
 
+import com.tinnova.vehicles.HttpUtils;
 import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.VehicleRepository;
 import com.tinnova.vehicles.services.VehicleService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.tinnova.vehicles.HttpUtils.getList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -32,8 +28,6 @@ class VehicleControllerTest {
     @Autowired
     private VehicleRepository vehicleRepository;
     private static final LocalDateTime currencyDate = LocalDateTime.now();
-    private static final String BASE_URL = "http://localhost:8082";
-    private static final RestTemplate restTemplate = new RestTemplate();
 
     @Test
     void shouldSearchAllVehicles() {
@@ -85,7 +79,7 @@ class VehicleControllerTest {
         vehicleRepository.save(vehicleExpect);
 
         // Act
-        Vehicle vehicleActual = get(
+        Vehicle vehicleActual = HttpUtils.get(
                 "/vehicles/1",
                 Vehicle.class
         );
@@ -107,7 +101,7 @@ class VehicleControllerTest {
         vehicleExpect.setCreationDate(currencyDate);
 
         // Act
-        Vehicle vehicleActual = post(
+        Vehicle vehicleActual = HttpUtils.post(
                 "/vehicles",
                 vehicleExpect,
                 Vehicle.class
@@ -129,7 +123,7 @@ class VehicleControllerTest {
         vehiclePatchExpect.setYearManufacture(1950);
 
         // Act
-        Vehicle vehicleActual = patch(
+        Vehicle vehicleActual = HttpUtils.patch(
                 "/vehicles/2",
                 vehiclePatchExpect,
                 Vehicle.class
@@ -156,7 +150,7 @@ class VehicleControllerTest {
         vehicleRepository.save(vehicleExpect);
 
         // Act
-        delete(
+        HttpUtils.delete(
                 "/vehicles/1"
         );
 
@@ -175,7 +169,7 @@ class VehicleControllerTest {
                 .toList();
 
         // Act
-        List<String> brandsActual = getList(
+        List<String> brandsActual = HttpUtils.getList(
                 "/brands",
                 String[].class
         );
@@ -205,42 +199,5 @@ class VehicleControllerTest {
 
     private void createListVehiclesInDataBase() {
         vehicleRepository.saveAll(createListVehicles());
-    }
-
-    private <T> List<T> getList(String path, Class<T[]> responseType) {
-        String url = BASE_URL + path;
-        T[] objects = restTemplate.getForObject(url, responseType);
-        assert objects != null;
-        return Arrays.asList(objects);
-    }
-
-    private <T> T get(String path, Class<T> responseType) {
-        String url = BASE_URL + path;
-        return restTemplate.getForObject(url, responseType);
-    }
-
-    private <T> T post(String path, Object request, Class<T> responseType) {
-        String url = BASE_URL + path;
-        HttpEntity<Object> entity = new HttpEntity<>(request, defaultHeaders());
-        return restTemplate.postForObject(url, entity, responseType);
-    }
-
-    private <T> T patch(String path, Object request, Class<T> responseType) {
-        String url = BASE_URL + path;
-        HttpEntity<Object> entity = new HttpEntity<>(request, defaultHeaders());
-
-        return restTemplate.patchForObject(url, entity, responseType);
-    }
-
-    private void delete(String path) throws URISyntaxException {
-        String url = BASE_URL + path;
-        restTemplate.delete(new URI(url));
-    }
-
-    private HttpHeaders defaultHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        return headers;
     }
 }
