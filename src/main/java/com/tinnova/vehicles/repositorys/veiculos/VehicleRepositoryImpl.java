@@ -4,15 +4,13 @@ import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.filter.VehicleFilter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.springframework.data.domain.Sort;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +25,7 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 		Predicate[] predicates = createWhere(vehicleFilter, builder, root);
 		criteriaQuery.where(predicates);
 		
-		TypedQuery<Vehicle> query = entityManager.createQuery(criteriaQuery);
-		return query.getResultList();
+		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
 
 	private Predicate[] createWhere(VehicleFilter vehicleFilter, CriteriaBuilder criteriaBuilder, Root<Vehicle> root) {
@@ -37,25 +34,27 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 		predicates.add(criteriaBuilder.equal(root.<String> get("sold"), vehicleFilter.isSold()));
 		
 		if (vehicleFilter.isRegisteredLasWeek()) {
-			
-			LocalDate beforeSevenDays = LocalDate.now().minusDays(7);
-			Timestamp beforeSevenDaysTimesTamp = Timestamp.valueOf(beforeSevenDays.atStartOfDay());
-			
-			predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("creation_date"), beforeSevenDaysTimesTamp));
-			
+			LocalDateTime beforeSevenDays = LocalDateTime.now().minusDays(7);
+			predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("creationDate"), beforeSevenDays));
 		}
 		
-		if (vehicleFilter.getBrand() != null && vehicleFilter.getBrand() != "") {
+		if (vehicleFilter.getBrand() != null && !vehicleFilter.getBrand().equals("")) {
 			predicates.add(criteriaBuilder.equal(criteriaBuilder.upper(root.get("brand")), vehicleFilter.getBrand().toUpperCase()));
 		}
-		
+
 		if (vehicleFilter.getDecade() != null) {
-			String decadaVeiculoString = vehicleFilter.getDecade().toString();
-			decadaVeiculoString = decadaVeiculoString.substring(0, decadaVeiculoString.length() - 1);
-			
-			predicates.add(criteriaBuilder.between(root.get("year"), Integer.parseInt(decadaVeiculoString + "0"), Integer.parseInt(decadaVeiculoString + "9")));
+			int firstYear = 1000 + vehicleFilter.getDecade();
+			List<Predicate> predicatesYear = new ArrayList<>();
+			LocalDate startDate = LocalDate.of(firstYear, 1, 1);
+			LocalDate endDate = LocalDate.of(LocalDate.now().getYear() + vehicleFilter.getDecade(), 12, 31);
+
+			for (LocalDate date = startDate; date.isBefore(endDate.plusYears(100)); date = date.plusYears(100)) {
+				predicatesYear.add(criteriaBuilder.equal(root.get("year"), date.getYear()));
+			}
+
+			predicates.add(criteriaBuilder.or(predicatesYear.toArray(new Predicate[0])));
 		}
-		
-		return predicates.toArray(new Predicate[predicates.size()]);
+
+		return predicates.toArray(new Predicate[0]);
 	}
 }

@@ -1,12 +1,14 @@
 package com.tinnova.vehicles.models;
 
 import com.electronwill.nightconfig.core.conversion.PreserveNotNull;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "vehicle")
@@ -31,9 +33,11 @@ public class Vehicle implements Serializable{
 	
 	@PreserveNotNull
 	@Column(name = "creation_date")
-	private Timestamp creationDate;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	private LocalDateTime creationDate;
 	
 	@PreserveNotNull
 	@Column(name = "modification_date")
-	private Timestamp modificationDate;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
+	private LocalDateTime modificationDate;
 }

@@ -4,8 +4,8 @@ CREATE TABLE vehicle (
     year INTEGER NOT NULL,
     description VARCHAR(256) NOT NULL,
     sold BOOLEAN NOT NULL,
-    creation_date TIMESTAMP NOT NULL,
-    modification_date TIMESTAMP NOT NULL
+    creation_date DATE NOT NULL,
+    modification_date DATE NOT NULL
 );
 
 

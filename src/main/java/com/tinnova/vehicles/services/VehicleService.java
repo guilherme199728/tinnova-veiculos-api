@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class VehicleService {
     }
 
     public Vehicle save(Vehicle vehicle) {
-        vehicle.setModificationDate(new Timestamp(System.currentTimeMillis()));
-        vehicle.setCreationDate(new Timestamp(System.currentTimeMillis()));
+        vehicle.setModificationDate(LocalDateTime.now());
+        vehicle.setCreationDate(LocalDateTime.now());
         return vehicleRepository.save(vehicle);
     }
 
@@ -50,7 +51,7 @@ public class VehicleService {
         vehicle.setSold(newVehicle.isSold());
         vehicle.setYear(newVehicle.getYear());
         vehicle.setDescription(newVehicle.getDescription());
-        vehicle.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        vehicle.setModificationDate(LocalDateTime.now());
         vehicle.setBrand(newVehicle.getBrand());
 
         return vehicleRepository.save(vehicle);
@@ -61,7 +62,7 @@ public class VehicleService {
         vehicle.setBrand(vehiclesPatchDto.getBrand());
         vehicle.setYear(vehiclesPatchDto.getYear());
         vehicle.setDescription(vehiclesPatchDto.getDescription());
-        vehicle.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        vehicle.setModificationDate(LocalDateTime.now());
 
         return vehicleRepository.save(vehicle);
     }
