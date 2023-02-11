@@ -165,12 +165,12 @@ class VehicleControllerTest {
 
         List<String> brandsExpected = createListVehicles()
                 .stream()
-                .map(Vehicle::getDescription)
+                .map(Vehicle::getBrand)
                 .toList();
 
         // Act
         List<String> brandsActual = HttpUtils.getList(
-                "/brands",
+                "/vehicles/brands",
                 String[].class
         );
 
@@ -182,7 +182,7 @@ class VehicleControllerTest {
     private List<Vehicle> createListVehicles() {
         List<Vehicle> vehicles = new ArrayList<>();
 
-        for (int i = 1; i < 11; i++) {
+        for (int i = 1; i < 10; i++) {
             Vehicle vehicle = new Vehicle();
             vehicle.setId(i);
             vehicle.setYearManufacture(1910 + i);

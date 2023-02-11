@@ -1,8 +1,13 @@
 package com.tinnova.vehicles;
 
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -12,7 +17,15 @@ import java.util.List;
 
 public class HttpUtils {
     private static final String BASE_URL = "http://localhost:8082";
-    private static final RestTemplate restTemplate = new RestTemplate();
+    private static final RestTemplate restTemplate = restTemplate();
+
+    public static RestTemplate restTemplate()  {
+        RestTemplate restTemplate =  new RestTemplate ();
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        restTemplate.setRequestFactory(requestFactory);
+        return restTemplate;
+    }
 
     public static <T> List<T> getList(String path, Class<T[]> responseType) {
         String url = BASE_URL + path;
@@ -34,9 +47,9 @@ public class HttpUtils {
 
     public static <T> T patch(String path, Object request, Class<T> responseType) {
         String url = BASE_URL + path;
-        HttpEntity<Object> entity = new HttpEntity<>(request, defaultHeaders());
+        HttpEntity<Object> entity = new HttpEntity<>(request,  defaultHeaders());
 
-        return restTemplate.patchForObject(url, entity, responseType);
+        return restTemplate.exchange(url, HttpMethod.PATCH, entity, responseType).getBody();
     }
 
     public static void delete(String path) throws URISyntaxException {

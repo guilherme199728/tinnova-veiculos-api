@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Long>, VehicleRepositoryQuery {
-    @Query("select distinct vehicles.brand from Vehicle vehicles")
+    @Query("select distinct vehicles.brand from Vehicle vehicles order by vehicles.brand asc")
     List<String> findBrands();
 }
