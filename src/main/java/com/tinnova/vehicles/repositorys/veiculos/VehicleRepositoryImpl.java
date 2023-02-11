@@ -23,7 +23,8 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 		CriteriaQuery<Vehicle> criteriaQuery = builder.createQuery(Vehicle.class);
 		Root<Vehicle> root = criteriaQuery.from(Vehicle.class);
 		Predicate[] predicates = createWhere(vehicleFilter, builder, root);
-		criteriaQuery.where(predicates);
+		criteriaQuery.where(predicates).orderBy(builder.asc(root.get("id")));
+
 		
 		return entityManager.createQuery(criteriaQuery).getResultList();
 	}
