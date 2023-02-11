@@ -37,7 +37,7 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 		
 		predicates.add(criteriaBuilder.equal(root.<String> get("sold"), vehicleFilter.isVeiculoVendido()));
 		
-		if (vehicleFilter.isRegistradoUtimaSemana()) {
+		if (vehicleFilter.isRegisteredLasWeek()) {
 			
 			LocalDate beforeSevenDays = LocalDate.now().minusDays(7);
 			Timestamp beforeSevenDaysTimesTamp = Timestamp.valueOf(beforeSevenDays.atStartOfDay());

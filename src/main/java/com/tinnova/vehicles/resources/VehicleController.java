@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/veiculos")
+@RequestMapping("/vehicles")
 public class VehicleController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class VehicleController {
 		return vehicleService.findByFilter(vehicleFilter);
 	}
 	
-	@GetMapping("/marcas-veiculos")
+	@GetMapping("/brands")
 	public List<String> getBrands() {
 		return vehicleService.getBrands();
 	}
@@ -38,7 +38,7 @@ public class VehicleController {
 	public void save(@RequestBody Vehicle vehicle, HttpServletResponse httpServletResponse) {
 		Vehicle newVehicle = vehicleService.save(vehicle);
 		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{codigo}").buildAndExpand(newVehicle.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newVehicle.getId()).toUri();
 		httpServletResponse.setHeader("Location", uri.toASCIIString());
 		
 		ResponseEntity.created(uri).body(newVehicle);
