@@ -6,6 +6,6 @@ import com.tinnova.vehicles.repositorys.filter.VehicleFilter;
 import java.util.List;
 
 public interface VehicleRepositoryQuery {
-	public List<Vehicle> findByFilter(VehicleFilter vehicleFilter);
+	List<Vehicle> findByFilter(VehicleFilter vehicleFilter);
 	
 }
