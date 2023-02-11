@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface VehicleRepositoryQuery {
 	List<Vehicle> findByFilter(VehicleFilter vehicleFilter);
-	
 }

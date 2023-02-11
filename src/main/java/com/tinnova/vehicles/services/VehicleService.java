@@ -5,7 +5,9 @@ import com.tinnova.vehicles.exceptions.NotFoundException;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.VehicleRepository;
 import com.tinnova.vehicles.repositorys.filter.VehicleFilter;
+import com.tinnova.vehicles.utils.VehiclesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -17,8 +19,11 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private VehiclesUtils vehiclesUtils;
+
     public List<Vehicle> getAll() {
-        return orderById(vehicleRepository.findAll());
+        return vehiclesUtils.orderById(vehicleRepository.findAll());
     }
 
     public Vehicle getById(long id) {
@@ -30,7 +35,7 @@ public class VehicleService {
     }
 
     public List<Vehicle> findByFilter(VehicleFilter vehicleFilter) {
-        return orderById(vehicleRepository.findByFilter(vehicleFilter));
+        return vehiclesUtils.orderById(vehicleRepository.findByFilter(vehicleFilter));
     }
 
     public Vehicle save(Vehicle vehicle) {
@@ -67,12 +72,5 @@ public class VehicleService {
 
     public List<String> getBrands() {
         return vehicleRepository.getBrands();
-    }
-
-
-    private List<Vehicle> orderById(List<Vehicle> vehicle) {
-        vehicle.sort(Comparator.comparingLong(Vehicle::getId));
-
-        return vehicle;
     }
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.data.domain.Sort;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 		TypedQuery<Vehicle> query = entityManager.createQuery(criteriaQuery);
 		return query.getResultList();
 	}
-	
+
 	private Predicate[] createWhere(VehicleFilter vehicleFilter, CriteriaBuilder criteriaBuilder, Root<Vehicle> root) {
 		List<Predicate> predicates = new ArrayList<>();
 		
@@ -57,5 +58,4 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 		
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
-
 }
