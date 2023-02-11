@@ -35,7 +35,7 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 	private Predicate[] createWhere(VehicleFilter vehicleFilter, CriteriaBuilder criteriaBuilder, Root<Vehicle> root) {
 		List<Predicate> predicates = new ArrayList<>();
 		
-		predicates.add(criteriaBuilder.equal(root.<String> get("sold"), vehicleFilter.isVeiculoVendido()));
+		predicates.add(criteriaBuilder.equal(root.<String> get("sold"), vehicleFilter.isSold()));
 		
 		if (vehicleFilter.isRegisteredLasWeek()) {
 			
@@ -46,12 +46,12 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
 			
 		}
 		
-		if (vehicleFilter.getVeiculoMarca() != null && vehicleFilter.getVeiculoMarca() != "") {
-			predicates.add(criteriaBuilder.equal(criteriaBuilder.upper(root.get("brand")), vehicleFilter.getVeiculoMarca().toUpperCase()));
+		if (vehicleFilter.getBrand() != null && vehicleFilter.getBrand() != "") {
+			predicates.add(criteriaBuilder.equal(criteriaBuilder.upper(root.get("brand")), vehicleFilter.getBrand().toUpperCase()));
 		}
 		
-		if (vehicleFilter.getDecada() != null) {
-			String decadaVeiculoString = vehicleFilter.getDecada().toString();
+		if (vehicleFilter.getDecade() != null) {
+			String decadaVeiculoString = vehicleFilter.getDecade().toString();
 			decadaVeiculoString = decadaVeiculoString.substring(0, decadaVeiculoString.length() - 1);
 			
 			predicates.add(criteriaBuilder.between(root.get("year"), Integer.parseInt(decadaVeiculoString + "0"), Integer.parseInt(decadaVeiculoString + "9")));

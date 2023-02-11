@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,14 @@ public class VehicleService {
 
     public List<Vehicle> getAll() {
         return orderById(vehicleRepository.findAll());
+    }
+
+    public Vehicle getById(long id) {
+        return vehicleRepository
+                .findAllById(List.of(id))
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Vehicle> findByFilter(VehicleFilter vehicleFilter) {

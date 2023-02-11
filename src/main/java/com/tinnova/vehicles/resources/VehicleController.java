@@ -15,44 +15,61 @@ import java.util.List;
 @RestController
 @RequestMapping("/vehicles")
 public class VehicleController {
-	
-	@Autowired
-	private VehicleService vehicleService;
-	
-	@GetMapping
-	public List<Vehicle> getAll() {
-		return vehicleService.getAll();
-	}
-	
-	@GetMapping("/find")
-	public List<Vehicle> findByFilter(VehicleFilter vehicleFilter) {
-		return vehicleService.findByFilter(vehicleFilter);
-	}
-	
-	@GetMapping("/brands")
-	public List<String> getBrands() {
-		return vehicleService.getBrands();
-	}
-	
-	@PostMapping
-	public void save(@RequestBody Vehicle vehicle, HttpServletResponse httpServletResponse) {
-		Vehicle newVehicle = vehicleService.save(vehicle);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newVehicle.getId()).toUri();
-		httpServletResponse.setHeader("Location", uri.toASCIIString());
-		
-		ResponseEntity.created(uri).body(newVehicle);
-	}
-	
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<Vehicle> update(@PathVariable Long id, @RequestBody Vehicle vehicle) {
-		return ResponseEntity.ok(vehicleService.update(id, vehicle));
-	}
 
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
-		vehicleService.delete(id);
-	}
+    @Autowired
+    private VehicleService vehicleService;
+
+    @GetMapping
+    public List<Vehicle> getAll() {
+        return vehicleService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Vehicle getById(@PathVariable Long id) {
+        return vehicleService.getById(id);
+    }
+
+    @GetMapping("/filter")
+    public List<Vehicle> findByFilter(
+            @RequestParam String brand,
+            @RequestParam boolean sold,
+            @RequestParam Integer decade,
+            @RequestParam boolean registeredLasWeek
+    ) {
+        VehicleFilter vehicleFilter = VehicleFilter.builder()
+                .brand(brand)
+                .sold(sold)
+                .decade(decade)
+                .registeredLasWeek(registeredLasWeek)
+                .build();
+
+        return vehicleService.findByFilter(vehicleFilter);
+    }
+
+    @PostMapping
+    public void save(@RequestBody Vehicle vehicle, HttpServletResponse httpServletResponse) {
+        Vehicle newVehicle = vehicleService.save(vehicle);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newVehicle.getId()).toUri();
+        httpServletResponse.setHeader("Location", uri.toASCIIString());
+
+        ResponseEntity.created(uri).body(newVehicle);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Vehicle> update(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+        return ResponseEntity.ok(vehicleService.update(id, vehicle));
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        vehicleService.delete(id);
+    }
+
+    @GetMapping("/brands")
+    public List<String> getBrands() {
+        return vehicleService.getBrands();
+    }
 
 }
