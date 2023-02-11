@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
-	
-	
 	@PersistenceContext
 	private EntityManager entityManager;
 	

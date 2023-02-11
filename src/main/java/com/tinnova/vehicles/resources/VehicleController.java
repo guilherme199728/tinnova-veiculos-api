@@ -1,5 +1,7 @@
 package com.tinnova.vehicles.resources;
 
+import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
+import com.tinnova.vehicles.exceptions.NotFoundException;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.filter.VehicleFilter;
 import com.tinnova.vehicles.services.VehicleService;
@@ -24,11 +26,6 @@ public class VehicleController {
         return vehicleService.getAll();
     }
 
-    @GetMapping("/{id}")
-    public Vehicle getById(@PathVariable Long id) {
-        return vehicleService.getById(id);
-    }
-
     @GetMapping("/filter")
     public List<Vehicle> findByFilter(
             @RequestParam String brand,
@@ -46,6 +43,11 @@ public class VehicleController {
         return vehicleService.findByFilter(vehicleFilter);
     }
 
+    @GetMapping("/{id}")
+    public Vehicle getById(@PathVariable Long id) {
+        return vehicleService.getById(id);
+    }
+
     @PostMapping
     public void save(@RequestBody Vehicle vehicle, HttpServletResponse httpServletResponse) {
         Vehicle newVehicle = vehicleService.save(vehicle);
@@ -58,8 +60,13 @@ public class VehicleController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Vehicle> update(@PathVariable Long id, @RequestBody Vehicle vehicle) {
+    public ResponseEntity<Vehicle> update(@PathVariable Long id, @RequestBody Vehicle vehicle) throws NotFoundException {
         return ResponseEntity.ok(vehicleService.update(id, vehicle));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Vehicle> patch(@PathVariable Long id, @RequestBody VehiclesPatchDto vehiclesPatchDto) throws NotFoundException {
+        return ResponseEntity.ok(vehicleService.patch(id, vehiclesPatchDto));
     }
 
     @DeleteMapping("/{id}")
@@ -71,5 +78,4 @@ public class VehicleController {
     public List<String> getBrands() {
         return vehicleService.getBrands();
     }
-
 }

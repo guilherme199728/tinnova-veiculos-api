@@ -1,17 +1,16 @@
 package com.tinnova.vehicles.services;
 
+import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
+import com.tinnova.vehicles.exceptions.NotFoundException;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.VehicleRepository;
 import com.tinnova.vehicles.repositorys.filter.VehicleFilter;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VehicleService {
@@ -35,18 +34,31 @@ public class VehicleService {
     }
 
     public Vehicle save(Vehicle vehicle) {
-        vehicle.setModification_date(new Timestamp(System.currentTimeMillis()));
-        vehicle.setCreation_date(new Timestamp(System.currentTimeMillis()));
+        vehicle.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        vehicle.setCreationDate(new Timestamp(System.currentTimeMillis()));
         return vehicleRepository.save(vehicle);
     }
 
-    public Vehicle update(Long id, Vehicle vehicle) {
-        Optional<Vehicle> newVehicle = vehicleRepository.findById(id);
+    public Vehicle update(Long id, Vehicle newVehicle) throws NotFoundException {
+        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(NotFoundException::new);
+        vehicle.setBrand(newVehicle.getBrand());
+        vehicle.setSold(newVehicle.isSold());
+        vehicle.setYear(newVehicle.getYear());
+        vehicle.setDescription(newVehicle.getDescription());
+        vehicle.setModificationDate(new Timestamp(System.currentTimeMillis()));
+        vehicle.setBrand(newVehicle.getBrand());
 
-        BeanUtils.copyProperties(vehicle, newVehicle.get(), "veiculoCodigo");
-        newVehicle.get().setModification_date(new Timestamp(System.currentTimeMillis()));
+        return vehicleRepository.save(vehicle);
+    }
 
-        return vehicleRepository.save(newVehicle.get());
+    public Vehicle patch(Long id, VehiclesPatchDto vehiclesPatchDto) throws NotFoundException {
+        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(NotFoundException::new);
+        vehicle.setBrand(vehiclesPatchDto.getBrand());
+        vehicle.setYear(vehiclesPatchDto.getYear());
+        vehicle.setDescription(vehiclesPatchDto.getDescription());
+        vehicle.setModificationDate(new Timestamp(System.currentTimeMillis()));
+
+        return vehicleRepository.save(vehicle);
     }
 
     public void delete(Long id) {
@@ -58,7 +70,7 @@ public class VehicleService {
     }
 
 
-    public List<Vehicle> orderById(List<Vehicle> vehicle) {
+    private List<Vehicle> orderById(List<Vehicle> vehicle) {
         vehicle.sort(Comparator.comparingLong(Vehicle::getId));
 
         return vehicle;
