@@ -1,5 +1,6 @@
 package com.tinnova.vehicles.controllers;
 
+import com.tinnova.vehicles.dtos.brands.QuantityPerBrandsDto;
 import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
 import com.tinnova.vehicles.exceptions.NotFoundException;
 import com.tinnova.vehicles.models.Vehicle;
@@ -77,5 +78,10 @@ public class VehicleController {
     @GetMapping("/brands")
     public ResponseEntity<List<String>> findBrands() {
         return ResponseEntity.ok(vehicleService.findBrands());
+    }
+
+    @GetMapping("/totalQuantityPerBrands")
+    public List<QuantityPerBrandsDto> findTotalQuantityPerBrands() {
+        return vehicleService.findTotalQuantityPerBrands();
     }
 }

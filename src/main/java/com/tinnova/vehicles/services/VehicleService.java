@@ -1,5 +1,6 @@
 package com.tinnova.vehicles.services;
 
+import com.tinnova.vehicles.dtos.brands.QuantityPerBrandsDto;
 import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
 import com.tinnova.vehicles.exceptions.NotFoundException;
 import com.tinnova.vehicles.models.Vehicle;
@@ -68,5 +69,9 @@ public class VehicleService {
 
     public List<String> findBrands() {
         return vehicleRepository.findBrands();
+    }
+
+    public List<QuantityPerBrandsDto> findTotalQuantityPerBrands() {
+        return vehicleRepository.findTotalQuantityPerBrands();
     }
 }
