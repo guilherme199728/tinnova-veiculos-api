@@ -1,7 +1,8 @@
 package com.tinnova.vehicles.services;
 
-import com.tinnova.vehicles.dtos.brands.QuantityPerBrandsDto;
-import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
+import com.tinnova.vehicles.dtos.QuantityPerBrandsDto;
+import com.tinnova.vehicles.dtos.VehiclesPatchDto;
+import com.tinnova.vehicles.dtos.VehiclesPerDecadeDto;
 import com.tinnova.vehicles.exceptions.NotFoundException;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.VehicleRepository;
@@ -11,7 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class VehicleService {
@@ -73,5 +78,25 @@ public class VehicleService {
 
     public List<QuantityPerBrandsDto> findTotalQuantityPerBrands() {
         return vehicleRepository.findTotalQuantityPerBrands();
+    }
+
+    public List<VehiclesPerDecadeDto> findTotalVehiclePerDecade() {
+        Map<Integer, Long> vehiclesByDecade = vehicleRepository.findAll().stream()
+                .map(vehicle -> vehicle.getYearManufacture() / 10)
+                .map(decade -> decade * 10)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        List<VehiclesPerDecadeDto> vehiclesPerDecadeDtos = new ArrayList<>();
+
+        vehiclesByDecade.forEach((decade, count) -> {
+            vehiclesPerDecadeDtos.add(
+                    VehiclesPerDecadeDto.builder()
+                            .decade(decade)
+                            .quantity(count)
+                            .build()
+            );
+        });
+
+        return vehiclesPerDecadeDtos;
     }
 }

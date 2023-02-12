@@ -3,6 +3,7 @@ package com.tinnova.vehicles.models;
 import com.electronwill.nightconfig.core.conversion.PreserveNotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

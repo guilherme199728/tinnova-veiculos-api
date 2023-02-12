@@ -1,4 +1,4 @@
-package com.tinnova.vehicles.dtos.vehicles;
+package com.tinnova.vehicles.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

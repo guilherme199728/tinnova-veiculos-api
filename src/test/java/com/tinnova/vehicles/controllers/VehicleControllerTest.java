@@ -1,7 +1,7 @@
 package com.tinnova.vehicles.controllers;
 
 import com.tinnova.vehicles.HttpUtils;
-import com.tinnova.vehicles.dtos.vehicles.VehiclesPatchDto;
+import com.tinnova.vehicles.dtos.VehiclesPatchDto;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.VehicleRepository;
 import com.tinnova.vehicles.services.VehicleService;

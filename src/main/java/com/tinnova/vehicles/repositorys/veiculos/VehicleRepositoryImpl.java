@@ -1,6 +1,6 @@
 package com.tinnova.vehicles.repositorys.veiculos;
 
-import com.tinnova.vehicles.dtos.brands.QuantityPerBrandsDto;
+import com.tinnova.vehicles.dtos.QuantityPerBrandsDto;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.filter.VehicleFilter;
 import jakarta.persistence.EntityManager;
@@ -20,23 +20,23 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
     private EntityManager entityManager;
 
     public List<Vehicle> findByFilter(VehicleFilter vehicleFilter) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Vehicle> criteriaQuery = builder.createQuery(Vehicle.class);
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> criteriaQuery = criteriaBuilder.createQuery(Vehicle.class);
         Root<Vehicle> root = criteriaQuery.from(Vehicle.class);
-        Predicate[] predicates = createWhere(vehicleFilter, builder, root);
-        criteriaQuery.where(predicates).orderBy(builder.asc(root.get("id")));
-
+        Predicate[] predicates = createWhere(vehicleFilter, criteriaBuilder, root);
+        criteriaQuery.where(predicates).orderBy(criteriaBuilder.asc(root.get("id")));
 
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override
     public List<QuantityPerBrandsDto> findTotalQuantityPerBrands() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<QuantityPerBrandsDto> query = cb.createQuery(QuantityPerBrandsDto.class);
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<QuantityPerBrandsDto> query = criteriaBuilder.createQuery(QuantityPerBrandsDto.class);
         Root<Vehicle> root = query.from(Vehicle.class);
-        query.multiselect(root.get("brand"), cb.count(root));
+        query.multiselect(root.get("brand"), criteriaBuilder.count(root));
         query.groupBy(root.get("brand"));
+
         return entityManager.createQuery(query).getResultList();
     }
 
