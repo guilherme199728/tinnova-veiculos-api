@@ -81,9 +81,9 @@ public class VehicleController {
         return ResponseEntity.ok(vehicleService.findBrands());
     }
 
-    @GetMapping("/totalPerBrands")
-    public List<QuantityPerBrandsDto> findTotalPerBrands() {
-        return vehicleService.findTotalQuantityPerBrands();
+    @GetMapping("/totalVehiclePerBrands")
+    public List<QuantityPerBrandsDto> findTotalVehiclePerBrands() {
+        return vehicleService.findTotalVehiclePerBrands();
     }
 
     @GetMapping("/totalVehiclePerDecade")

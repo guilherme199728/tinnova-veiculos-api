@@ -76,8 +76,8 @@ public class VehicleService {
         return vehicleRepository.findBrands();
     }
 
-    public List<QuantityPerBrandsDto> findTotalQuantityPerBrands() {
-        return vehicleRepository.findTotalQuantityPerBrands();
+    public List<QuantityPerBrandsDto> findTotalVehiclePerBrands() {
+        return vehicleRepository.findTotalVehiclePerBrands();
     }
 
     public List<VehiclesPerDecadeDto> findTotalVehiclePerDecade() {

@@ -1,12 +1,13 @@
 package com.tinnova.vehicles.dtos;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class QuantityPerBrandsDto {
     String brand;
     long quantity;

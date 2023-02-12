@@ -1,7 +1,9 @@
 package com.tinnova.vehicles.controllers;
 
 import com.tinnova.vehicles.HttpUtils;
+import com.tinnova.vehicles.dtos.QuantityPerBrandsDto;
 import com.tinnova.vehicles.dtos.VehiclesPatchDto;
+import com.tinnova.vehicles.dtos.VehiclesPerDecadeDto;
 import com.tinnova.vehicles.models.Vehicle;
 import com.tinnova.vehicles.repositorys.VehicleRepository;
 import com.tinnova.vehicles.services.VehicleService;
@@ -179,6 +181,102 @@ class VehicleControllerTest {
         assertEquals(brandsExpected, brandsActual);
     }
 
+    @Test
+    void shouldFindTotalVehiclesPerBrands() {
+        // Arrange
+        insertDefault();
+
+        List<QuantityPerBrandsDto> quantityPerBrandsDtosExpect = new ArrayList<>();
+
+        quantityPerBrandsDtosExpect.add(
+                QuantityPerBrandsDto.builder()
+                        .brand("Chevrolet")
+                        .quantity(2)
+                        .build()
+        );
+
+        quantityPerBrandsDtosExpect.add(
+                QuantityPerBrandsDto.builder()
+                        .brand("Ford")
+                        .quantity(1)
+                        .build()
+        );
+
+        // Act
+        List<QuantityPerBrandsDto> quantityPerBrandsDtoActual = HttpUtils.getList(
+                "/vehicles/totalVehiclePerBrands",
+                QuantityPerBrandsDto[].class
+        );
+
+        // Assert
+        assertEquals(quantityPerBrandsDtosExpect, quantityPerBrandsDtoActual);
+    }
+
+    @Test
+    void shouldFindTotalVehiclesPerDecade() {
+        // Arrange
+        insertDefault();
+
+        List<VehiclesPerDecadeDto> VehiclesPerDecadeDtosExpect = new ArrayList<>();
+
+        VehiclesPerDecadeDtosExpect.add(
+                VehiclesPerDecadeDto.builder()
+                        .decade(2000)
+                        .quantity(2)
+                        .build()
+        );
+
+        VehiclesPerDecadeDtosExpect.add(
+                VehiclesPerDecadeDto.builder()
+                        .decade(1980)
+                        .quantity(1)
+                        .build()
+        );
+
+        // Act
+        List<VehiclesPerDecadeDto> vehiclesPerDecadeDtoActual =  HttpUtils.getList(
+                "/vehicles/totalVehiclePerDecade",
+                VehiclesPerDecadeDto[].class
+        );
+
+        // Assert
+        assertEquals(VehiclesPerDecadeDtosExpect, vehiclesPerDecadeDtoActual);
+    }
+
+    private void insertDefault() {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setYearManufacture(1983);
+        vehicle.setSold(true);
+        vehicle.setDescription("Cruze");
+        vehicle.setBrand("Chevrolet");
+        vehicle.setModificationDate(currencyDate);
+        vehicle.setCreationDate(currencyDate);
+
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setYearManufacture(2000);
+        vehicle2.setSold(true);
+        vehicle2.setDescription("Cruze");
+        vehicle2.setBrand("Chevrolet");
+        vehicle2.setModificationDate(currencyDate);
+        vehicle2.setCreationDate(currencyDate);
+
+        Vehicle vehicle3 = new Vehicle();
+        vehicle3.setYearManufacture(2000);
+        vehicle3.setSold(true);
+        vehicle3.setDescription("Cruze");
+        vehicle3.setBrand("Ford");
+        vehicle3.setModificationDate(currencyDate);
+        vehicle3.setCreationDate(currencyDate);
+
+        vehicleRepository.save(vehicle);
+        vehicleRepository.save(vehicle2);
+        vehicleRepository.save(vehicle3);
+    }
+
+    private void createListVehiclesInDataBase() {
+        vehicleRepository.saveAll(createListVehicles());
+    }
+
     private List<Vehicle> createListVehicles() {
         List<Vehicle> vehicles = new ArrayList<>();
 
@@ -195,9 +293,5 @@ class VehicleControllerTest {
         }
 
         return vehicles;
-    }
-
-    private void createListVehiclesInDataBase() {
-        vehicleRepository.saveAll(createListVehicles());
     }
 }

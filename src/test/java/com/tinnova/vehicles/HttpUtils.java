@@ -30,17 +30,20 @@ public class HttpUtils {
         String url = BASE_URL + path;
         T[] objects = restTemplate().getForObject(url, responseType);
         assert objects != null;
+
         return Arrays.asList(objects);
     }
 
     public static <T> T get(String path, Class<T> responseType) {
         String url = BASE_URL + path;
+
         return restTemplate().getForObject(url, responseType);
     }
 
     public static <T> T post(String path, Object request, Class<T> responseType) {
         String url = BASE_URL + path;
         HttpEntity<Object> entity = new HttpEntity<>(request, defaultHeaders());
+
         return restTemplate().postForObject(url, entity, responseType);
     }
 

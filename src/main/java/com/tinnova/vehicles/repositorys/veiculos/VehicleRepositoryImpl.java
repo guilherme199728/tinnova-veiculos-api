@@ -30,7 +30,7 @@ public class VehicleRepositoryImpl implements VehicleRepositoryQuery {
     }
 
     @Override
-    public List<QuantityPerBrandsDto> findTotalQuantityPerBrands() {
+    public List<QuantityPerBrandsDto> findTotalVehiclePerBrands() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<QuantityPerBrandsDto> query = criteriaBuilder.createQuery(QuantityPerBrandsDto.class);
         Root<Vehicle> root = query.from(Vehicle.class);

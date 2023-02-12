@@ -9,5 +9,5 @@ import java.util.List;
 public interface VehicleRepositoryQuery {
     List<Vehicle> findByFilter(VehicleFilter vehicleFilter);
 
-    List<QuantityPerBrandsDto> findTotalQuantityPerBrands();
+    List<QuantityPerBrandsDto> findTotalVehiclePerBrands();
 }
