@@ -6,7 +6,7 @@ Este projeto foi criado com o objetivo de realizar uma avaliação técnica para
 A documentação esta disponivel neste [link](https://documenter.getpostman.com/view/9169158/2s935uGLc8)
 
 # Versões
-Java - 17
+Java - 17  
 Spring boot - 3.0.2
 
 # Servidor de desenvolvimento
