@@ -9,38 +9,38 @@ CREATE TABLE vehicle (
 );
 
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Chevrolet', 2016, 'Cruze', false, '04/04/2021', '04/04/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Chevrolet', 2016, 'Cruze', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ford', 2003, 'Ford ka', true, '04/04/2021', '04/04/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ford', 2003, 'Ford ka', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Volkswagen', 1980, 'Fusca', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Volkswagen', 1980, 'Fusca', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Fiat', 2015, 'Argo', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Fiat', 2015, 'Argo', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ferrari', 2020, 'Portofino', true, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ferrari', 2020, 'Portofino', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Porsche', 2020, 'Cayenne', true, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Porsche', 2020, 'Cayenne', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Chevrolet', 2016, 'Cruze', false, '04/04/2021', '04/04/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Chevrolet', 2016, 'Cruze', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ford', 2003, 'Ford ka', true, '04/04/2021', '04/04/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ford', 2003, 'Ford ka', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Volkswagen', 1980, 'Fusca', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Volkswagen', 1980, 'Fusca', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Fiat', 2015, 'Argo', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Fiat', 2015, 'Argo', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ferrari', 2020, 'Portofino', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ferrari', 2020, 'Portofino', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Porsche', 2020, 'Cayenne', true, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Porsche', 2020, 'Cayenne', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Chevrolet', 2016, 'Cruze', true, '04/04/2021', '04/04/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Chevrolet', 2016, 'Cruze', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ford', 2003, 'Ford ka', true, '04/04/2021', '04/04/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ford', 2003, 'Ford ka', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Volkswagen', 1980, 'Fusca', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Volkswagen', 1980, 'Fusca', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Fiat', 2015, 'Argo', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Fiat', 2015, 'Argo', false, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ferrari', 2020, 'Portofino', true, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Ferrari', 2020, 'Portofino', true, clock_timestamp(), clock_timestamp());
 
-insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Porsche', 2020, 'Cayenne', false, '04/03/2021', '04/03/2021');
+insert into vehicle (brand, year_manufacture, description, sold, creation_date, modification_date) values ('Porsche', 2020, 'Cayenne', false, clock_timestamp(), clock_timestamp());
