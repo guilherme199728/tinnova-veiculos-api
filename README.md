@@ -12,7 +12,7 @@ O projeto está configurado com [Flyway](https://flywaydb.org/documentation/) e 
 # Ambiente de testes
 Quando executado os teste uma instancia do spring é subida com o banco de dados H2, onde é possivel inserir dados no banco em memoria facilitando o desenvolvimento dos testes.
 Para executar os teste basta executar o comanda `mvn test` ou executar por sua IDE de preferencia.
-# Exercicios de logica
+# Exercícios de logica
 Para executar os exercicios de logica basta executar a classe `MainExercises.java` ela executara os 4 exercicios.
 # Compilação
 Execute o comando `mvn install` para compilar o projeto. Os artefatos da compilação serão armazenados na pasta `target`.
