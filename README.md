@@ -5,10 +5,10 @@ A documentação com os endpoints está disponível neste [link](https://documen
 # Versões
 Java - 17  
 Spring boot - 3.0.2
+PostgresSQL - 15
 # Servidor de desenvolvimento
+Crie um schema no postgres com o nome `tinnova-vehicles-bd` a porta do banco configurarda é a padrao 5432, caso deseje alterar o nome do banco basta ir ate a property do projeto.O projeto está configurado com [Flyway](https://flywaydb.org/documentation/) e gera automaticamente as tabelas e os dados iniciais no banco de dados.
 Execute a aplicação através da sua IDE preferida, a aplicação ficará disponível no endereço [http://localhost:4200/](http://localhost:4200/).
-
-O projeto está configurado com [Flyway](https://flywaydb.org/documentation/) e gera automaticamente as tabelas e os dados iniciais no banco de dados.
 # Ambiente de testes
 Quando executado os teste uma instancia do spring é subida com o banco de dados H2, onde é possivel inserir dados no banco em memoria facilitando o desenvolvimento dos testes.
 Para executar os teste basta executar o comanda `mvn test` ou executar por sua IDE de preferencia.
